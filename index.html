@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#087443">
+<title>FindUganda</title>
+<style>
+:root{--g:#087443;--gd:#075c37;--gold:#e5b83f;--ink:#17231d;--muted:#64736a;--bg:#f4f8f5;--line:#dce6df}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:Arial,sans-serif;color:var(--ink);line-height:1.5}
+header{position:sticky;top:0;z-index:10;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 2px 8px #1232}
+.top{max-width:1100px;margin:auto;padding:10px 15px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{display:flex;align-items:center;gap:8px;color:var(--g);font-weight:900;font-size:clamp(25px,5vw,36px);letter-spacing:-1.4px;white-space:nowrap}
+.brand span{color:var(--gold)}.logo{width:43px;height:43px;flex:none}
+.nav{display:flex;gap:7px;overflow-x:auto;padding:0 14px 10px;max-width:1100px;margin:auto;scrollbar-width:thin}
+.nav button{background:#edf5ef;color:var(--gd);border:1px solid #d8e7dc;padding:9px 13px;border-radius:9px;white-space:nowrap;font-weight:700}
+.nav button.active{background:var(--g);color:#fff;border-color:var(--g)}
+main{max-width:1100px;margin:auto;padding:20px 15px 40px}
+.page{display:none}.page.active{display:block}
+.hero{background:linear-gradient(125deg,var(--gd),#0b8650);color:#fff;padding:45px 18px;border-radius:17px;text-align:center}
+.hero h1{font-size:clamp(30px,6vw,48px);line-height:1.12;margin:0 0 12px}.hero p{max-width:650px;margin:0 auto 20px;color:#e8f5ed}
+.search{display:flex;gap:8px;max-width:720px;margin:auto;background:#fff;padding:7px;border-radius:11px}
+input,select,textarea{font:inherit;width:100%;padding:12px;border:1px solid #cbd8cf;border-radius:8px;background:#fff}
+.search input{border:0;min-width:0}.btn,button{cursor:pointer;border:0;border-radius:9px;padding:11px 15px;font-weight:800}
+.gold{background:var(--gold);color:#201d12}.green{background:var(--g);color:#fff}.light{background:#edf5ef;color:var(--gd);border:1px solid #d8e7dc}
+h2{color:#173b29;margin:0 0 6px;font-size:25px}.muted{color:var(--muted);font-size:14px;margin:0 0 18px}
+.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:18px}
+.cat,.panel{background:#fff;border:1px solid var(--line);border-radius:13px;padding:16px}
+.cat{text-align:center;cursor:pointer}.cat .emoji{font-size:27px;display:block}.cat b{font-size:13px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-top:18px}
+.panel h3{color:var(--g);margin:0 0 7px}.panel p{font-size:14px;color:var(--muted)}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}
+.formbox{background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px;max-width:800px}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:13px}.field{display:flex;flex-direction:column;gap:6px}.field.full{grid-column:1/-1}label{font-size:13px;font-weight:700;color:#30443a}textarea{min-height:90px}
+.notice{display:none;padding:12px;border-radius:8px;background:#e8f6ed;color:#075c37;margin-top:13px;font-size:14px}
+.cardrow{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:15px}
+footer{text-align:center;background:#102e20;color:#dcebe1;padding:24px 15px}footer b{font-size:21px;color:#fff}
+.small{font-size:12px;color:var(--muted);margin:12px 0}
+@media(max-width:760px){.grid{grid-template-columns:repeat(2,1fr)}.two,.cardrow{grid-template-columns:1fr}.search{flex-direction:column}.search button{width:100%}.fields{grid-template-columns:1fr}.field.full{grid-column:auto}.top{padding:9px 12px}.logo{width:39px;height:39px}}
+</style>
+</head>
+<body>
+<header>
+ <div class="top">
+  <div class="brand">
+   <svg class="logo" viewBox="0 0 64 64" aria-label="FindUganda logo">
+    <path d="M32 4C18.7 4 8 14.5 8 27.5 8 44 32 61 32 61s24-17 24-33.5C56 14.5 45.3 4 32 4Z" fill="#087443"/>
+    <circle cx="32" cy="27" r="13" fill="#fff"/><circle cx="30" cy="25" r="7" fill="none" stroke="#087443" stroke-width="4"/>
+    <path d="m35.5 30.5 7 7" stroke="#e5b83f" stroke-width="4.5" stroke-linecap="round"/>
+   </svg>
+   <div>Find<span>Uganda</span></div>
+  </div>
+ </div>
+ <nav class="nav" aria-label="Main navigation">
+  <button class="active" data-page="home">Home</button>
+  <button data-page="explore">Explore businesses</button>
+  <button data-page="account">My account</button>
+  <button data-page="register">Register business</button>
+  <button data-page="about">About</button>
+ </nav>
+</header>
+<main>
+<section class="page active" id="page-home">
+ <div class="hero">
+  <h1>Find local. Connect easily. Grow business.</h1>
+  <p>Discover shops, services and businesses around you. Find what you need and connect directly with local businesses.</p>
+  <div class="search"><input id="homeSearch" placeholder="What business or service are you looking for?"><button class="gold" data-go="explore">Search businesses</button></div>
+ </div>
+ <div class="two">
+  <div class="panel"><h3>For customers</h3><p>Explore local businesses, save favourites and contact them directly.</p><button class="green" data-go="explore">Explore businesses</button></div>
+  <div class="panel"><h3>For business owners</h3><p>Make your business easier to discover by listing it on FindUganda.</p><button class="green" data-go="register">Add my business</button></div>
+ </div>
+</section>
+
+<section class="page" id="page-explore">
+ <h2>Explore business categories</h2><p class="muted">Choose a category to explore. Real business listings will be connected when the database is ready.</p>
+ <div class="grid">
+  <div class="cat"><span class="emoji">🛒</span><b>Shops & supermarkets</b></div>
+  <div class="cat"><span class="emoji">🍽️</span><b>Restaurants & food</b></div>
+  <div class="cat"><span class="emoji">💈</span><b>Salons & barbershops</b></div>
+  <div class="cat"><span class="emoji">🏨</span><b>Hotels & accommodation</b></div>
+  <div class="cat"><span class="emoji">🧱</span><b>Construction & hardware</b></div>
+  <div class="cat"><span class="emoji">🚗</span><b>Transport & vehicle services</b></div>
+  <div class="cat"><span class="emoji">🎓</span><b>Education & training</b></div>
+  <div class="cat"><span class="emoji">🩺</span><b>Health & wellness</b></div>
+  <div class="cat"><span class="emoji">🛠️</span><b>Professional & technical services</b></div>
+  <div class="cat"><span class="emoji">🌱</span><b>Agriculture & supplies</b></div>
+ </div>
+ <div class="panel" style="margin-top:16px"><h3>Business search</h3><div class="search" style="border:1px solid var(--line)"><input id="exploreSearch" placeholder="Search for a business, product or service"><button class="green" id="exploreSearchBtn">Search</button></div><p id="searchNotice" class="small">Search will connect to the business directory when the database is added.</p></div>
+</section>
+
+<section class="page" id="page-account">
+ <h2>Your FindUganda account</h2><p class="muted">One account gives you access to Customer and Business services.</p>
+ <div class="two">
+  <div class="panel"><h3>New to FindUganda?</h3><p>Create one account to save businesses and, if you own a business, manage your business profile too.</p><button class="green" data-account="create">Create an account</button></div>
+  <div class="panel"><h3>Already registered?</h3><p>Sign in to continue to your customer and business services.</p><button class="light" data-account="signin">Sign in</button></div>
+ </div>
+ <div class="formbox" id="accountForm" style="display:none;margin-top:16px">
+  <h3 id="accountHeading">Create account</h3><p class="muted">Screen preview only. Secure account creation will be connected later.</p>
+  <div class="fields">
+   <div class="field"><label for="userName">Full name</label><input id="userName" placeholder="Your name"></div>
+   <div class="field"><label for="userPhone">Phone number</label><input id="userPhone" placeholder="Phone number"></div>
+   <div class="field full"><label for="userEmail">Email (optional)</label><input id="userEmail" type="email" placeholder="Email address"></div>
+  </div>
+  <p class="small">Do not enter a real password or sensitive information in this demonstration.</p>
+  <div class="actions"><button class="green" id="accountContinue">Continue preview</button><button class="light" data-hide="accountForm">Close</button></div>
+  <div class="notice" id="accountNotice"></div>
+ </div>
+ <div id="dashboards" style="display:none;margin-top:16px">
+  <h2>Choose your menu</h2><p class="muted">The same account can access both menus.</p>
+  <div class="cardrow">
+   <div class="panel"><h3>Customer menu</h3><p>Saved businesses, enquiries, contacts and reports.</p><button class="green" data-dashboard="customer">Open Customer menu</button></div>
+   <div class="panel"><h3>Business menu</h3><p>Manage business profiles, branches, photos and promotions.</p><button class="green" data-dashboard="business">Open Business menu</button></div>
+  </div>
+  <div class="panel" id="dashboardDetail" style="display:none;margin-top:14px"></div>
+ </div>
+</section>
+
+<section class="page" id="page-register">
+ <h2>Register your business</h2><p class="muted">Your listing will be labelled Unverified until it has been checked.</p>
+ <div class="formbox">
+  <form id="businessForm"><div class="fields">
+   <div class="field"><label for="businessName">Business name *</label><input id="businessName" required placeholder="e.g. Fresh Look Barbershop"></div>
+   <div class="field"><label for="category">Business category *</label><select id="category" required><option value="">Choose category</option><option>Shops & supermarkets</option><option>Restaurants & food services</option><option>Salons & barbershops</option><option>Hotels & accommodation</option><option>Construction & hardware</option><option>Transport & vehicle services</option><option>Education & training</option><option>Health & wellness</option><option>Professional & technical services</option><option>Agriculture & agricultural supplies</option><option>Other</option></select></div>
+   <div class="field full"><label for="description">Business description / products and services *</label><textarea id="description" required placeholder="Briefly describe what your business offers"></textarea></div>
+   <div class="field"><label for="district">District *</label><input id="district" required placeholder="e.g. Pader"></div>
+   <div class="field"><label for="town">Town / Area *</label><input id="town" required placeholder="e.g. Pader Town, Angagura"></div>
+   <div class="field"><label for="phone">Telephone number *</label><input id="phone" required type="tel" placeholder="Phone number"></div>
+   <div class="field"><label for="whatsapp">WhatsApp number</label><input id="whatsapp" type="tel" placeholder="If different"></div>
+   <div class="field"><label for="hours">Opening hours</label><input id="hours" placeholder="e.g. Mon–Sat, 8am–8pm"></div>
+   <div class="field"><label for="contactName">Owner / contact person's name</label><input id="contactName" placeholder="Full name"></div>
+   <div class="field full"><label for="photo">Business photo (optional)</label><input id="photo" type="file" accept="image/*"></div>
+  </div>
+  <p class="small">Prototype only: this form does not yet save information to a live database. Do not enter sensitive information.</p>
+  <button class="green" type="submit">Preview registration</button><div class="notice" id="formNotice"></div>
+  </form>
+ </div>
+</section>
+
+<section class="page" id="page-about">
+ <h2>About FindUganda</h2>
+ <div class="panel"><h3>Find local. Connect easily. Grow business.</h3><p>FindUganda is being developed as a Uganda-focused business discovery and promotion platform, beginning in Pader District. Customers will be able to find local businesses and contact them directly. Business owners will be able to manage profiles and branches and promote their services.</p><p><b>Our starting point:</b> Pader District, Uganda.</p></div>
+</section>
+</main>
+<footer><b>FindUganda</b><div>Find local. Connect easily. Grow business.</div><small>Starting in Pader District, Uganda.</small></footer>
+<script>
+(function(){
+ function openPage(name){
+  document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});
+  var target=document.getElementById('page-'+name);
+  if(target){target.classList.add('active');}
+  document.querySelectorAll('.nav button').forEach(function(b){b.classList.toggle('active',b.dataset.page===name);});
+  window.scrollTo({top:0,behavior:'smooth'});
+ }
+ document.querySelectorAll('[data-page]').forEach(function(b){b.addEventListener('click',function(){openPage(b.dataset.page);});});
+ document.querySelectorAll('[data-go]').forEach(function(b){b.addEventListener('click',function(){openPage(b.dataset.go);});});
+ document.querySelectorAll('[data-account]').forEach(function(b){b.addEventListener('click',function(){
+  var form=document.getElementById('accountForm');form.style.display='block';
+  document.getElementById('accountHeading').textContent=b.dataset.account==='create'?'Create your FindUganda account':'Sign in to FindUganda';
+  document.getElementById('accountNotice').style.display='none';
+ });});
+ document.querySelectorAll('[data-hide]').forEach(function(b){b.addEventListener('click',function(){document.getElementById(b.dataset.hide).style.display='none';});});
+ document.getElementById('accountContinue').addEventListener('click',function(){
+  var notice=document.getElementById('accountNotice');notice.style.display='block';notice.textContent='This is a preview only. No account has been created and no information has been saved. The live system will use one account for both Customer and Business menus.';
+  document.getElementById('dashboards').style.display='block';
+ });
+ document.querySelectorAll('[data-dashboard]').forEach(function(b){b.addEventListener('click',function(){
+  var d=document.getElementById('dashboardDetail');d.style.display='block';
+  d.innerHTML=b.dataset.dashboard==='customer'?'<h3>Customer menu preview</h3><p>Saved businesses · Recent enquiries · Contacted businesses · Report incorrect information.</p>':'<h3>Business menu preview</h3><p>My business profiles · Manage branches · Business photos · Promotions · Performance overview.</p><button class="green" id="addBusinessNow">Add a business</button>';
+  var add=document.getElementById('addBusinessNow');if(add)add.addEventListener('click',function(){openPage('register');});
+ });});
+ document.getElementById('exploreSearchBtn').addEventListener('click',function(){
+  var q=document.getElementById('exploreSearch').value.trim();var n=document.getElementById('searchNotice');
+  n.textContent=q?'Search preview for “'+q+'”. Real matching business listings will appear when the directory database is connected.':'Please enter a business, product or service to search.';
+ });
+ document.getElementById('businessForm').addEventListener('submit',function(e){
+  e.preventDefault();var name=document.getElementById('businessName').value.trim(),district=document.getElementById('district').value.trim(),town=document.getElementById('town').value.trim();
+  var n=document.getElementById('formNotice');n.style.display='block';n.textContent='Registration preview for '+name+' — '+town+', '+district+'. In the live system, the listing will be marked Unverified until checked.';
+ });
+})();
+</script>
+</body></html>
