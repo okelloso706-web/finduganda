@@ -179,4 +179,18 @@ footer{text-align:center;background:#102e20;color:#dcebe1;padding:24px 15px}foot
  });
 })();
 </script>
+ <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+const SUPABASE_URL = 'https://vlwojzqrmakcdmixzeuf.supabase.co';
+
+const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_jtLGOtdHVJVqL9RvXDcEvg_JOvJ_7P-';
+
+const supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+);
+
+console.log('FindUganda Supabase connection initialized.');
+</script>
 </body></html>
