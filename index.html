@@ -192,5 +192,17 @@ const supabaseClient = window.supabase.createClient(
 );
 
 console.log('FindUganda Supabase connection initialized.');
+ supabaseClient
+    .from('businesses')
+    .select('id')
+    .limit(1)
+    .then(({ data, error }) => {
+        const result = document.createElement('p');
+        result.style.cssText = 'padding:12px;background:#e8f6ed;color:#075c37;text-align:center;';
+        result.textContent = error
+            ? 'Connection test failed: ' + error.message
+            : 'SUCCESS: FindUganda website is connected to Supabase!';
+        document.body.appendChild(result);
+    });
 </script>
 </body></html>
