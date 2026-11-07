@@ -90,29 +90,80 @@ footer{text-align:center;background:#102e20;color:#dcebe1;padding:24px 15px}foot
 </section>
 
 <section class="page" id="page-account">
- <h2>Your FindUganda account</h2><p class="muted">One account gives you access to Customer and Business services.</p>
- <div class="two">
-  <div class="panel"><h3>New to FindUganda?</h3><p>Create one account to save businesses and, if you own a business, manage your business profile too.</p><button class="green" data-account="create">Create an account</button></div>
-  <div class="panel"><h3>Already registered?</h3><p>Sign in to continue to your customer and business services.</p><button class="light" data-account="signin">Sign in</button></div>
+ <h2>Your FindUganda account</h2>
+ <p class="muted">One account gives you access to Customer and Business services.</p>
+
+ <div class="two" id="authChoices">
+  <div class="panel">
+   <h3>New to FindUganda?</h3>
+   <p>Create one account to save businesses and manage your business profile.</p>
+   <button class="green" data-account="create">Create an account</button>
+  </div>
+  <div class="panel">
+   <h3>Already registered?</h3>
+   <p>Sign in to continue to your services.</p>
+   <button class="light" data-account="signin">Sign in</button>
+  </div>
  </div>
+
  <div class="formbox" id="accountForm" style="display:none;margin-top:16px">
-  <h3 id="accountHeading">Create account</h3><p class="muted">Screen preview only. Secure account creation will be connected later.</p>
-  <div class="fields">
-   <div class="field"><label for="userName">Full name</label><input id="userName" placeholder="Your name"></div>
-   <div class="field"><label for="userPhone">Phone number</label><input id="userPhone" placeholder="Phone number"></div>
-   <div class="field full"><label for="userEmail">Email (optional)</label><input id="userEmail" type="email" placeholder="Email address"></div>
-  </div>
-  <p class="small">Do not enter a real password or sensitive information in this demonstration.</p>
-  <div class="actions"><button class="green" id="accountContinue">Continue preview</button><button class="light" data-hide="accountForm">Close</button></div>
-  <div class="notice" id="accountNotice"></div>
+  <h3 id="accountHeading">Create your FindUganda account</h3>
+  <p class="muted" id="authDescription">Enter your details to register.</p>
+
+  <form id="authForm">
+   <div class="fields">
+    <div class="field full" id="nameField">
+     <label for="userName">Full name *</label>
+     <input id="userName" type="text" autocomplete="name" placeholder="Your full name">
+    </div>
+
+    <div class="field full" id="phoneField">
+     <label for="userPhone">Phone number (optional)</label>
+     <input id="userPhone" type="tel" autocomplete="tel" placeholder="e.g. 07XXXXXXXX">
+    </div>
+
+    <div class="field full">
+     <label for="userEmail">Email address *</label>
+     <input id="userEmail" type="email" autocomplete="email" required placeholder="Your email address">
+    </div>
+
+    <div class="field full">
+     <label for="userPassword">Password *</label>
+     <input id="userPassword" type="password" autocomplete="new-password" minlength="8" required placeholder="At least 8 characters">
+    </div>
+   </div>
+
+   <p class="small">Use an email address you can access. Never share your password with anyone.</p>
+
+   <div class="actions">
+    <button class="green" type="submit" id="authSubmit">Create account</button>
+    <button class="light" type="button" data-hide="accountForm">Close</button>
+   </div>
+  </form>
+
+  <div class="notice" id="authNotice" role="status" aria-live="polite"></div>
  </div>
+
  <div id="dashboards" style="display:none;margin-top:16px">
-  <h2>Choose your menu</h2><p class="muted">The same account can access both menus.</p>
+  <h2>Welcome to FindUganda</h2>
+  <p class="muted" id="signedInUser"></p>
+
   <div class="cardrow">
-   <div class="panel"><h3>Customer menu</h3><p>Saved businesses, enquiries, contacts and reports.</p><button class="green" data-dashboard="customer">Open Customer menu</button></div>
-   <div class="panel"><h3>Business menu</h3><p>Manage business profiles, branches, photos and promotions.</p><button class="green" data-dashboard="business">Open Business menu</button></div>
+   <div class="panel">
+    <h3>Customer menu</h3>
+    <p>Saved businesses, enquiries, contacts and reports.</p>
+    <button class="green" data-dashboard="customer">Open Customer menu</button>
+   </div>
+
+   <div class="panel">
+    <h3>Business menu</h3>
+    <p>Manage business profiles, branches, photos and promotions.</p>
+    <button class="green" data-dashboard="business">Open Business menu</button>
+   </div>
   </div>
+
   <div class="panel" id="dashboardDetail" style="display:none;margin-top:14px"></div>
+  <button class="light" type="button" id="signOutBtn" style="margin-top:14px">Sign out</button>
  </div>
 </section>
 
