@@ -205,16 +205,96 @@ footer{text-align:center;background:#102e20;color:#dcebe1;padding:24px 15px}foot
  }
  document.querySelectorAll('[data-page]').forEach(function(b){b.addEventListener('click',function(){openPage(b.dataset.page);});});
  document.querySelectorAll('[data-go]').forEach(function(b){b.addEventListener('click',function(){openPage(b.dataset.go);});});
- document.querySelectorAll('[data-account]').forEach(function(b){b.addEventListener('click',function(){
-  var form=document.getElementById('accountForm');form.style.display='block';
-  document.getElementById('accountHeading').textContent=b.dataset.account==='create'?'Create your FindUganda account':'Sign in to FindUganda';
-  document.getElementById('accountNotice').style.display='none';
- });});
- document.querySelectorAll('[data-hide]').forEach(function(b){b.addEventListener('click',function(){document.getElementById(b.dataset.hide).style.display='none';});});
- document.getElementById('accountContinue').addEventListener('click',function(){
-  var notice=document.getElementById('accountNotice');notice.style.display='block';notice.textContent='This is a preview only. No account has been created and no information has been saved. The live system will use one account for both Customer and Business menus.';
-  document.getElementById('dashboards').style.display='block';
+var authMode = 'signup';
+
+document.querySelectorAll('[data-account]').forEach(function(b){
+ b.addEventListener('click',function(){
+  authMode = b.dataset.account;
+  document.getElementById('accountForm').style.display='block';
+  document.getElementById('accountHeading').textContent =
+   authMode === 'create' ? 'Create your FindUganda account' : 'Sign in to FindUganda';
+  document.getElementById('authDescription').textContent =
+   authMode === 'create' ? 'Enter your details to register.' : 'Enter your email and password to sign in.';
+  document.getElementById('nameField').style.display =
+   authMode === 'create' ? 'flex' : 'none';
+  document.getElementById('phoneField').style.display =
+   authMode === 'create' ? 'flex' : 'none';
+  document.getElementById('userName').required = authMode === 'create';
+  document.getElementById('userPassword').autocomplete =
+   authMode === 'create' ? 'new-password' : 'current-password';
+  document.getElementById('authSubmit').textContent =
+   authMode === 'create' ? 'Create account' : 'Sign in';
+  document.getElementById('authNotice').style.display='none';
  });
+});
+ document.querySelectorAll('[data-hide]').forEach(function(b){b.addEventListener('click',function(){document.getElementById(b.dataset.hide).style.display='none';});});
+document.getElementById('authForm').addEventListener('submit', async function(e) {
+ e.preventDefault();
+
+ var notice = document.getElementById('authNotice');
+ var submit = document.getElementById('authSubmit');
+
+ notice.style.display = 'block';
+ notice.textContent = 'Please wait...';
+ submit.disabled = true;
+
+ var email = document.getElementById('userEmail').value.trim();
+ var password = document.getElementById('userPassword').value;
+
+ try {
+  if (authMode === 'create') {
+   var fullName = document.getElementById('userName').value.trim();
+   var phone = document.getElementById('userPhone').value.trim();
+
+   var result = await supabaseClient.auth.signUp({
+    email: email,
+    password: password,
+    options: {
+     data: {
+      full_name: fullName,
+      phone: phone
+     }
+    }
+   });
+
+   if (result.error) throw result.error;
+
+   notice.textContent = 'Registration received! Please check your email and click the confirmation link before signing in.';
+  } else {
+   var result = await supabaseClient.auth.signInWithPassword({
+    email: email,
+    password: password
+   });
+
+   if (result.error) throw result.error;
+
+   notice.textContent = 'Sign-in successful! Welcome to FindUganda.';
+
+   document.getElementById('authChoices').style.display = 'none';
+   document.getElementById('accountForm').style.display = 'none';
+   document.getElementById('dashboards').style.display = 'block';
+   document.getElementById('signedInUser').textContent =
+    'Signed in as ' + (result.data.user.email || 'FindUganda user');
+  }
+ } catch (error) {
+  notice.textContent = 'Unable to continue: ' + error.message;
+ } finally {
+  submit.disabled = false;
+ }
+});
+
+document.getElementById('signOutBtn').addEventListener('click', async function() {
+ var result = await supabaseClient.auth.signOut();
+
+ if (result.error) {
+  alert('Sign-out failed: ' + result.error.message);
+  return;
+ }
+
+ document.getElementById('dashboards').style.display = 'none';
+ document.getElementById('authChoices').style.display = 'grid';
+ document.getElementById('accountForm').style.display = 'none';
+});
  document.querySelectorAll('[data-dashboard]').forEach(function(b){b.addEventListener('click',function(){
   var d=document.getElementById('dashboardDetail');d.style.display='block';
   d.innerHTML=b.dataset.dashboard==='customer'?'<h3>Customer menu preview</h3><p>Saved businesses · Recent enquiries · Contacted businesses · Report incorrect information.</p>':'<h3>Business menu preview</h3><p>My business profiles · Manage branches · Business photos · Promotions · Performance overview.</p><button class="green" id="addBusinessNow">Add a business</button>';
